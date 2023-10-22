@@ -1,19 +1,14 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersController } from './users/users.controller';
 import { BlogsController } from './blogs/blogs.controller';
-import { ItemsController } from './items/items.controller';
-import { ItemsService } from './items/items.service';
-
+import { mongoUrl } from './config/Index';
+import { ItemsModule } from './items/items.module';
 @Module({
-  imports: [],
-  controllers: [
-    AppController,
-    UsersController,
-    BlogsController,
-    ItemsController,
-  ],
-  providers: [AppService, ItemsService],
+  imports: [ItemsModule, MongooseModule.forRoot(mongoUrl)],
+  controllers: [AppController, UsersController, BlogsController],
+  providers: [AppService],
 })
 export class AppModule {}
